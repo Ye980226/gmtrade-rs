@@ -3,7 +3,8 @@
 
 #include <stddef.h>
 #include "gmtrade_def.h"
-
+#include "rust/cxx.h"
+#include <string>
 #ifdef WIN32
 #ifdef GMSDKC_EXPORTS  
 #define GM_TRADE_API __declspec(dllexport)
@@ -24,90 +25,101 @@ namespace gmtrade
 		Trade();
 		virtual ~Trade();
 
-	public: //»ù´¡º¯Êı
+	public: //åŸºç¡€å‡½æ•°
 
-		//¿ªÊ¼½ÓÊÕÊÂ¼ş
+		//å¼€å§‹æ¥æ”¶äº‹ä»¶
 		int start();
 
-		//Í£Ö¹½ÓÊÕÊÂ¼ş
+		//åœæ­¢æ¥æ”¶äº‹ä»¶
 		void stop();
 
-		//ÉèÖÃÓÃ»§token
+		//è®¾ç½®ç”¨æˆ·token
 		void set_token(const char *token);
 
-		//ÉèÖÃ·şÎñµØÖ·
+		//è®¾ç½®æœåŠ¡åœ°å€
 		void set_endpoint(const char *serv_addr);
+		void set_endpoint_str(const std::string & serv_addr);
+		
 
-
-	public: //½»Ò×º¯Êı
+	public: //äº¤æ˜“å‡½æ•°
 
 		int login(const char *account_ids);
+		int login_str(const std::string &account_ids);
 
-		//²éÑ¯Ö¸¶¨½»Ò×ÕËºÅ×´Ì¬
+		//æŸ¥è¯¢æŒ‡å®šäº¤æ˜“è´¦å·çŠ¶æ€
+
 		int get_account_status(const char *account, AccountStatus &as);
 
-		//²éÑ¯ËùÓĞ½»Ò×ÕËºÅ×´Ì¬
+		int32_t get_account_status_str(const std::string &account,AccountStatus &as){
+			return (int32_t)this->get_account_status(account.c_str(),as);
+		}
+		//æŸ¥è¯¢æ‰€æœ‰äº¤æ˜“è´¦å·çŠ¶æ€
 		DataArray<AccountStatus>* get_all_account_status();
 
-		//°´Ö¸¶¨Á¿Î¯ÍĞ
+		//æŒ‰æŒ‡å®šé‡å§”æ‰˜
 		Order order_volume(const char *symbol, int volume, int side, int order_type, int position_effect, double price = 0, const char *account = NULL);
 
-		//°´Ö¸¶¨¼ÛÖµÎ¯ÍĞ
-		Order order_value(const char *symbol, double value, int side, int order_type, int position_effect, double price = 0, const char *account = NULL);
+		Order order_volume_str_int(const std::string &symbol, int32_t volume, int32_t side, int32_t order_type, int32_t position_effect, double price, const std::string & account){
+			return this->order_volume(symbol.c_str(),(int)volume,side,(int)order_type,(int)position_effect,price,account.c_str());
+		}
 
-		//°´×Ü×Ê²úÖ¸¶¨±ÈÀıÎ¯ÍĞ
+		//æŒ‰æŒ‡å®šä»·å€¼å§”æ‰˜
+		Order order_value(const char *symbol, double value, int side, int order_type, int position_effect, double price, const char *account = NULL);
+
+		//æŒ‰æ€»èµ„äº§æŒ‡å®šæ¯”ä¾‹å§”æ‰˜
 		Order order_percent(const char *symbol, double percent, int side, int order_type, int position_effect, double price = 0, const char *account = NULL);
 
-		//µ÷²Öµ½Ä¿±ê³Ö²ÖÁ¿
+		//è°ƒä»“åˆ°ç›®æ ‡æŒä»“é‡
 		Order order_target_volume(const char *symbol, int volume, int position_side, int order_type, double price = 0, const char *account = NULL);
 
-		//µ÷²Öµ½Ä¿±ê³Ö²Ö¶î
+		//è°ƒä»“åˆ°ç›®æ ‡æŒä»“é¢
 		Order order_target_value(const char *symbol, double value, int position_side, int order_type, double price = 0, const char *account = NULL);
 
-		//µ÷²Öµ½Ä¿±ê³Ö²Ö±ÈÀı£¨×Ü×Ê²úµÄ±ÈÀı£©
+		//è°ƒä»“åˆ°ç›®æ ‡æŒä»“æ¯”ä¾‹ï¼ˆæ€»èµ„äº§çš„æ¯”ä¾‹ï¼‰
 		Order order_target_percent(const char *symbol, double percent, int position_side, int order_type, double price = 0, const char *account = NULL);
 
-		//Æ½µ±Ç°ËùÓĞ¿ÉÆ½³Ö²Ö
+		//å¹³å½“å‰æ‰€æœ‰å¯å¹³æŒä»“
 		DataArray<Order>* order_close_all();
 
-		//Î¯ÍĞ³·µ¥
+		//å§”æ‰˜æ’¤å•
 		int order_cancel(const char *cl_ord_id, const char *account = NULL);
 
-		//³·ÏúËùÓĞÎ¯ÍĞ
+		//æ’¤é”€æ‰€æœ‰å§”æ‰˜
 		int order_cancel_all();
 
-		//Î¯ÍĞÏÂµ¥
+		//å§”æ‰˜ä¸‹å•
 		Order place_order(const char *symbol, int volume, int side, int order_type, int position_effect, double price = 0, int order_duration = 0, int order_qualifier = 0, double stop_price = 0, const char *account = NULL);
 
-		//²éÑ¯×Ê½ğ
+		//æŸ¥è¯¢èµ„é‡‘
 		int get_cash(Cash &cash, const char *accounts = NULL);
 
-		//²éÑ¯Î¯ÍĞ
+		//æŸ¥è¯¢å§”æ‰˜
 		DataArray<Order>* get_orders(const char *account = NULL);
 
-		//²éÑ¯Î´½áÎ¯ÍĞ
+		//æŸ¥è¯¢æœªç»“å§”æ‰˜
 		DataArray<Order>* get_unfinished_orders(const char *account = NULL);
 
-		//²éÑ¯³É½»
+		//æŸ¥è¯¢æˆäº¤
 		DataArray<ExecRpt>* get_execution_reports(const char *account = NULL);
 
-		//²éÑ¯³Ö²Ö
+		//æŸ¥è¯¢æŒä»“
 		DataArray<Position>* get_position(const char *account = NULL);
+		std::unique_ptr<DataArray<Position>> get_position_unq(const std::string & account);
 
 
-	public: //ÊÂ¼şº¯Êı
+	public: //äº‹ä»¶å‡½æ•°
 
-		//Î¯ÍĞ±ä»¯
-		virtual void on_order_status(Order *order);
-		//Ö´ĞĞ»Ø±¨
+		//å§”æ‰˜å˜åŒ–
+		virtual void on_order_status(Order *order);//å›è°ƒrustçš„å‡½æ•°
+		//æ‰§è¡Œå›æŠ¥
 		virtual void on_execution_report(ExecRpt *rpt);
-		//ÊµÅÌÕËºÅ×´Ì¬±ä»¯
+		//å®ç›˜è´¦å·çŠ¶æ€å˜åŒ–
 		virtual void on_account_status(AccountStatus *account_status);
-		//´íÎó²úÉú
+		//é”™è¯¯äº§ç”Ÿ
 		virtual void on_error(int error_code, const char *error_msg);
-		//Êı¾İÒÑ¾­Á¬½ÓÉÏ
+		//æ•°æ®å·²ç»è¿æ¥ä¸Š
 		virtual void on_trade_data_connected();
-		//½»Ò×Á¬½Ó¶Ï¿ªÁË
+		//äº¤æ˜“è¿æ¥æ–­å¼€äº†
 		virtual void on_trade_data_disconnected();
 
 	};

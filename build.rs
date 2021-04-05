@@ -1,21 +1,25 @@
+use cxx_build::CFG;
 fn main() {
     // check_arch();
+    //error vec![src/main.rs,src/module.rs]
     cxx_build::bridge("src/main.rs")
-        .file("src/gmtrade_def.cc")
+        .file("src/wrapper.cc")
         .flag_if_supported("-std=c++14")
         .compile("gmtrade-rs");
 
     // add_search_path();
     // add_llvm_path();
-    // println!("cargo:rustc-link-lib=gmtrade");
-    
-    println!("cargo:rerun-if-changed=include/gmtrade_csdk.h");
-    println!("cargo:rerun-if-changed=include/gmtrade_def.h");
-    println!("cargo:rerun-if-changed=include/gmtrade.h");
-    
+    println!("cargo:rustc-link-lib=lib/win64/gmtrade");
     
 
-    println!("cargo:rerun-if-changed=src/main.rs");
+    println!("cargo:rerun-if-changed=include/gmtrade_def.h");
+    println!("cargo:rerun-if-changed=include/gmtrade_csdk.h");
+    println!("cargo:rerun-if-changed=include/gmtrade.h");
+    println!("cargo:rerun-if-changed=include/wrapper.h");
+    println!("cargo:rerun-if-changed=src/wrapper.cc");
+
+    
+
 
 }
 // #[cfg(target_os = "windows")]

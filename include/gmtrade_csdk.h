@@ -12,121 +12,123 @@
 #endif
 #else
 #define GM_API extern "C"
+#define NULL 0
 #endif
 
 
-//»ù´¡ API //////////////////////////////////////////////////////////////////////////////
+//åŸºç¡€ API //////////////////////////////////////////////////////////////////////////////
+//rust å°ä¸€å±‚Fnï¼Œå†åœ¨c++å†™ä¸€ä¸ªå‡½æ•°æ¥å¤„ç†ï¼Œruståªæ˜¯é¢ä¸Šå°è£…äº†ä¸€å±‚ï¼Œä¹Ÿæ²¡æœ‰è¿”å›å€¼çš„ï¼Œéƒ½ä¸è¦ä¸¢å‡ºæ¥ï¼Œè¿™ç©æ„è¿˜æ˜¯ç”¨extern "C"æ¥å†™å§ï¼Œå¤ªä¹±äº†
 
 typedef void(*EventCallback)(const char *msg_type, void *data, int data_len);
 
-//ÉèÖÃÊÂ¼ş»Øµ÷, »Øµ÷data¾ùÎªc½á¹¹Ìå
+//è®¾ç½®äº‹ä»¶å›è°ƒ, å›è°ƒdataå‡ä¸ºcç»“æ„ä½“
 GM_API void gmi_set_event_callback(EventCallback cb);
 
-//ÉèÖÃÊÂ¼ş»Øµ÷, »Øµ÷data¾ùÎªprotobufĞòÁĞ»¯Á÷
+//è®¾ç½®äº‹ä»¶å›è°ƒ, å›è°ƒdataå‡ä¸ºprotobufåºåˆ—åŒ–æµ
 GM_API void gmi_set_event_callback_pb(EventCallback cb);
 
-//ÉèÖÃapi-key
+//è®¾ç½®api-key
 GM_API int gmi_set_token(const char *token);
 
-//×Ô¶¨Òå·şÎñµØÖ·
+//è‡ªå®šä¹‰æœåŠ¡åœ°å€
 GM_API void gmi_set_serv_addr(const char *addr);
 
-//ÔËĞĞ²ßÂÔ
+//è¿è¡Œç­–ç•¥
 GM_API int gmi_run();
 
-//¿ªÊ¼ÔËĞĞ²ßÂÔ
+//å¼€å§‹è¿è¡Œç­–ç•¥
 GM_API int gmi_start();
 
-//ÊµÅÌÄ£Ê½³õÊ¼»¯
+//å®ç›˜æ¨¡å¼åˆå§‹åŒ–
 GM_API int gmi_init();
 
-//ÔËĞĞ²ßÂÔ
+//è¿è¡Œç­–ç•¥
 GM_API int gmi_poll();
 
-//Í£Ö¹²ßÂÔ
+//åœæ­¢ç­–ç•¥
 GM_API int gmi_stop();
 
-//»ñÈ¡c-sdk°æ±¾ºÅ
+//è·å–c-sdkç‰ˆæœ¬å·
 GM_API const char* gmi_get_c_version();
 
-//¸ù¾İ´íÎóÂë»ñÈ¡´íÎóĞÅÏ¢
+//æ ¹æ®é”™è¯¯ç è·å–é”™è¯¯ä¿¡æ¯
 GM_API const char* gmi_strerror(int errorno);
 
-//»ñÈ¡À©Õ¹´íÎóĞÅÏ¢
+//è·å–æ‰©å±•é”™è¯¯ä¿¡æ¯
 GM_API const char* gmi_get_ext_errormsg();
 
 GM_API char * gmi_gbk2utf(const char *gbk);
 GM_API char * gmi_utf2gbk(const char *utf8);
 
-//ÉèÖÃsdkĞÅÏ¢
+//è®¾ç½®sdkä¿¡æ¯
 GM_API void gmi_set_version(const char *sdk_version, const char *sdk_lang, const char *sdk_arch = NULL, const char *sdk_os = NULL);
 
-//¶¨Ê±Æ÷
+//å®šæ—¶å™¨
 GM_API void gmi_set_timer(int interval);
 
-//½»Ò×Àà API //////////////////////////////////////////////////////////////////////////////
+//äº¤æ˜“ç±» API //////////////////////////////////////////////////////////////////////////////
 
-//ÉèÖÃÄ¬ÈÏÕËºÅ
+//è®¾ç½®é»˜è®¤è´¦å·
 GM_API int gmi_login(const char *account_ids);
 
-//ÏÂµ¥Î¯ÍĞ
+//ä¸‹å•å§”æ‰˜
 GM_API int gmi_place_order(Order *orders, int order_count, int is_combined, Order **res, int *count);
 
-//ÏÂµ¥Î¯ÍĞ req = core.api.Orders, res = core.api.Orders
+//ä¸‹å•å§”æ‰˜ req = core.api.Orders, res = core.api.Orders
 GM_API int gmi_place_order_pb(void *req, int req_len, void **res, int *res_len);
 
-//Æ½ËùÓĞ²ÖÎ»
+//å¹³æ‰€æœ‰ä»“ä½
 GM_API int gmi_close_all_positions(const char *account_ids, Order **res, int *count);
 
-//Æ½ËùÓĞ²ÖÎ» req = trade.api.CloseAllPositionsReq, res = core.api.Orders
+//å¹³æ‰€æœ‰ä»“ä½ req = trade.api.CloseAllPositionsReq, res = core.api.Orders
 GM_API int gmi_close_all_positions_pb(void *req, int req_len, void **res, int *res_len);
 
-//³·µ¥Î¯ÍĞ 
+//æ’¤å•å§”æ‰˜ 
 GM_API int gmi_cancel_orders(Order *orders, int count);
 
-//³·µ¥Î¯ÍĞ req = core.api.Orders
+//æ’¤å•å§”æ‰˜ req = core.api.Orders
 GM_API int gmi_cancel_orders_pb(void *req, int req_len);
 
-//³·ÏúËùÓĞÎ¯ÍĞ
+//æ’¤é”€æ‰€æœ‰å§”æ‰˜
 GM_API int gmi_cancel_all_orders(const char *account_ids = NULL);
 
-//³·ÏúËùÓĞÎ¯ÍĞ req = trade.api.CancelAllOrdersReq
+//æ’¤é”€æ‰€æœ‰å§”æ‰˜ req = trade.api.CancelAllOrdersReq
 GM_API int gmi_cancel_all_orders_pb(void *req, int req_len);
 
-//²éÑ¯Î¯ÍĞ
+//æŸ¥è¯¢å§”æ‰˜
 GM_API int gmi_get_orders(const char *account, const char *symbols, const char *cl_ord_ids, Order **res, int *count);
 
-//²éÑ¯Î¯ÍĞ req = trade.api.GetOrdersReq, res = core.api.Orders
+//æŸ¥è¯¢å§”æ‰˜ req = trade.api.GetOrdersReq, res = core.api.Orders
 GM_API int gmi_get_orders_pb(void *req, int req_len, void **res, int *res_len);
 
-//²éÑ¯Î´½áÎ¯ÍĞ
+//æŸ¥è¯¢æœªç»“å§”æ‰˜
 GM_API int gmi_get_unfinished_orders(const char *account, Order **res, int *count);
 
-//²éÑ¯Î´½áÎ¯ÍĞ req = trade.api.GetUnfinishedOrdersReq, res = core.api.Orders
+//æŸ¥è¯¢æœªç»“å§”æ‰˜ req = trade.api.GetUnfinishedOrdersReq, res = core.api.Orders
 GM_API int gmi_get_unfinished_orders_pb(void *req, int req_len, void **res, int *res_len);
 
-//²éÑ¯×Ê½ğ
+//æŸ¥è¯¢èµ„é‡‘
 GM_API int gmi_get_cash(const char *account, Cash **cash, int *count);
 
-//²éÑ¯×Ê½ğ  req = trade.api.GetCashReq, res = core.api.Cashes
+//æŸ¥è¯¢èµ„é‡‘  req = trade.api.GetCashReq, res = core.api.Cashes
 GM_API int gmi_get_cash_pb(void *req, int req_len, void **res, int *res_len);
 
-//²éÑ¯³Ö²Ö
+//æŸ¥è¯¢æŒä»“
 GM_API int gmi_get_positions(const char *account, const char *symbol, int side, Position **res, int *count);
 
-//²éÑ¯³Ö²Ö req = trade.api.GetPositionsReq, res = core.api.Positions
+//æŸ¥è¯¢æŒä»“ req = trade.api.GetPositionsReq, res = core.api.Positions
 GM_API int gmi_get_positions_pb(void *req, int req_len, void **res, int *res_len);
 
-//²éÑ¯³É½»
+//æŸ¥è¯¢æˆäº¤
 GM_API int gmi_get_execution_reports(const char *account, const char *cl_ord_id, int exec_type, ExecRpt **res, int *count);
 
-//²éÑ¯³É½» req = trade.api.GetExecrptsReq, res = core.api.ExecRpts
+//æŸ¥è¯¢æˆäº¤ req = trade.api.GetExecrptsReq, res = core.api.ExecRpts
 GM_API int gmi_get_execution_reports_pb(void *req, int req_len, void **res, int *res_len);
 
-//»ñÈ¡½»Ò×ÕË»§×´Ì¬
+//è·å–äº¤æ˜“è´¦æˆ·çŠ¶æ€
 GM_API int gmi_get_account_status(const char *accounts, AccountStatus **res, int *count);
 
-//»ñÈ¡½»Ò×ÕË»§×´Ì¬ req = tradegw.api.GetAccountStatusesReq, res = core.api.AccountStatuses
+//è·å–äº¤æ˜“è´¦æˆ·çŠ¶æ€ req = tradegw.api.GetAccountStatusesReq, res = core.api.AccountStatuses
 GM_API int gmi_get_account_status_pb(void *req, int req_len, void **res, int *res_len);
 
 #endif

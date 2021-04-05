@@ -18,9 +18,9 @@ dependencies = [
 
 [[package]]
 name = "cxx"
-version = "1.0.18"
+version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c76e80fb6d39f044d141223d7b56c468beaab53e7698a45cc535b780c2382b3c"
+checksum = "48879da186f5f8e1266d26956c31ad49080934de92c5f97994be6c014f17ca9d"
 dependencies = [
  "cc",
  "cxxbridge-flags",
@@ -30,9 +30,9 @@ dependencies = [
 
 [[package]]
 name = "cxx-build"
-version = "1.0.18"
+version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc91f445eea425a6eb563ba98802a9a33adfbea9ef3b61226b9d98aa9c3636de"
+checksum = "7bdd511400d49f9d72d5494f2108143dbafcd8f978dfe414f9c6d16557a5349f"
 dependencies = [
  "cc",
  "codespan-reporting",
@@ -45,15 +45,15 @@ dependencies = [
 
 [[package]]
 name = "cxxbridge-flags"
-version = "1.0.18"
+version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5f3bfe71a2767344b8ca945162df2445ed5a0a8244992723b9c68dd98a98ab32"
+checksum = "867d5ade1c77467f4b51446a00180ce6d9e9e1998e701b619dbbe6a838143ad9"
 
 [[package]]
 name = "cxxbridge-macro"
-version = "1.0.18"
+version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6a66e61d3db394b82ffa7e7849732d57e38e1bc25509527a5d30bfc2c39b5e6"
+checksum = "6ddc7ee92a676fab169c94696317ce5cfdb8aa13c2c1cdb82bff85650be18b93"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -61,11 +61,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "demo"
+name = "gmtrade"
 version = "0.1.0"
 dependencies = [
  "cxx",
  "cxx-build",
+ "libc",
 ]
 
 [[package]]
@@ -73,6 +74,12 @@ name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
+
+[[package]]
+name = "libc"
+version = "0.2.81"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1482821306169ec4d07f6aca392a4681f66c75c9918aa49641a2595db64053cb"
 
 [[package]]
 name = "link-cplusplus"
@@ -109,9 +116,9 @@ checksum = "7e114536316b51a5aa7a0e59fc49661fd263c5507dd08bd28de052e57626ce69"
 
 [[package]]
 name = "syn"
-version = "1.0.54"
+version = "1.0.58"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a2af957a63d6bd42255c359c93d9bfdb97076bd3b820897ce55ffbfbf107f44"
+checksum = "cc60a3d73ea6594cd712d830cc1f0390fd71542d8c8cd24e70cc54cdfd5e05d5"
 dependencies = [
  "proc-macro2",
  "quote",
